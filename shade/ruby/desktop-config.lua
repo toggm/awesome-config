@@ -37,7 +37,7 @@ function desktop:init(args)
 
 	netspeed.args = {
 		meter_function = system.net_speed,
-		interface      = "wlp60s0",
+		interface      = "eno1",
 		maxspeed       = { up = 6*1024^2, down = 6*1024^2 },
 		crit           = { up = 6*1024^2, down = 6*1024^2 },
 		timeout        = 2,
@@ -62,16 +62,16 @@ function desktop:init(args)
 
 	-- HDD speed
 	--------------------------------------------------------------------------------
-	local hddspeed = { geometry = wgeometry(grid, places.hddspeed, workarea) }
-
-	hddspeed.args = {
-		interface      = "sda",
-		meter_function = system.disk_speed,
-		timeout        = 2,
-		label          = "HARD DRIVE"
-	}
-
-	hddspeed.style = beautiful.individual.desktop.speedmeter.drive
+	-- local hddspeed = { geometry = wgeometry(grid, places.hddspeed, workarea) }
+	--
+	-- hddspeed.args = {
+	-- 	interface      = "sda",
+	-- 	meter_function = system.disk_speed,
+	-- 	timeout        = 2,
+	-- 	label          = "HARD DRIVE"
+	-- }
+	--
+	-- hddspeed.style = beautiful.individual.desktop.speedmeter.drive
 
 	-- CPU and memory usage
 	--------------------------------------------------------------------------------
@@ -89,16 +89,16 @@ function desktop:init(args)
 
 	-- Transmission info
 	--------------------------------------------------------------------------------
-	local transm = { geometry = wgeometry(grid, places.transm, workarea) }
-
-	transm.args = {
-		topbars    = { num = 12, maxm = 100 },
-		lines      = { { maxm = 6*1024 }, { maxm = 6*1024 } },
-		meter      = { async = system.transmission.info, args = { speed_only = true } },
-		timeout    = 10,
-	}
-
-	transm.style = beautiful.individual.desktop.multimeter.transmission
+	-- local transm = { geometry = wgeometry(grid, places.transm, workarea) }
+	--
+	-- transm.args = {
+	-- 	topbars    = { num = 12, maxm = 100 },
+	-- 	lines      = { { maxm = 6*1024 }, { maxm = 6*1024 } },
+	-- 	meter      = { async = system.transmission.info, args = { speed_only = true } },
+	-- 	timeout    = 10,
+	-- }
+	--
+	-- transm.style = beautiful.individual.desktop.multimeter.transmission
 
 	-- Disks
 	--------------------------------------------------------------------------------
@@ -109,8 +109,8 @@ function desktop:init(args)
 	disks.args = {
 		sensors  = {
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "root",    args = "/"            },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "home",    args = "/home"        },
-			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "storage", args = "/mnt/storage" },
+			-- { meter_function = system.fs_info, maxm = 100, crit = 80, name = "home",    args = "/home"        },
+			-- { meter_function = system.fs_info, maxm = 100, crit = 80, name = "storage", args = "/mnt/storage" },
 			{ meter_function = system.fs_info, maxm = 100, crit = 80, name = "media",   args = "/mnt/media"   },
 		},
 		timeout = 300
@@ -120,30 +120,30 @@ function desktop:init(args)
 
 	-- QEMU image (placed along with disks)
 	--------------------------------------------------------------------------------
-	local qm1 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-base.qcow2"
-	local qm2 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-current.qcow2"
-
-	local bms = beautiful.desktop.multimeter -- base multimeter style
-	local dy = disks_original_height - (bms.height.upright + bms.height.lines)
-
-	local qemu = { geometry = {} }
-
-	-- triky placement
-	qemu.geometry.x      = disks.geometry.x
-	qemu.geometry.y      = disks.geometry.y + disks.geometry.height + dy
-	qemu.geometry.width  = disks.geometry.width
-	qemu.geometry.height = beautiful.desktop.multimeter.height.lines
-
-	--setup
-	qemu.args = {
-		sensors  = {
-			{ meter_function = system.qemu_image_size, maxm = 100, crit = 90, name = "qemu-w10-base", args = qm1 },
-			{ meter_function = system.qemu_image_size, maxm = 100, crit = 80, name = "qemu-w10-snap", args = qm2 },
-		},
-		timeout = 600
-	}
-
-	qemu.style = beautiful.individual.desktop.multiline.images
+	-- local qm1 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-base.qcow2"
+	-- local qm2 = "/mnt/storage/vmdrive/win10-gvt/win10-gvt-current.qcow2"
+	--
+	-- local bms = beautiful.desktop.multimeter -- base multimeter style
+	-- local dy = disks_original_height - (bms.height.upright + bms.height.lines)
+	--
+	-- local qemu = { geometry = {} }
+	--
+	-- -- triky placement
+	-- qemu.geometry.x      = disks.geometry.x
+	-- qemu.geometry.y      = disks.geometry.y + disks.geometry.height + dy
+	-- qemu.geometry.width  = disks.geometry.width
+	-- qemu.geometry.height = beautiful.desktop.multimeter.height.lines
+	--
+	-- --setup
+	-- qemu.args = {
+	-- 	sensors  = {
+	-- 		{ meter_function = system.qemu_image_size, maxm = 100, crit = 90, name = "qemu-w10-base", args = qm1 },
+	-- 		{ meter_function = system.qemu_image_size, maxm = 100, crit = 80, name = "qemu-w10-snap", args = qm2 },
+	-- 	},
+	-- 	timeout = 600
+	-- }
+	--
+	-- qemu.style = beautiful.individual.desktop.multiline.images
 
 	-- Sensors parser setup
 	--------------------------------------------------------------------------------
@@ -151,12 +151,19 @@ function desktop:init(args)
 
 	system.lmsensors.delay = 2
 	system.lmsensors.patterns = {
-		cpu       = { match = "CPU:%s+%+(%d+)%.%d°[CF]" },
-		ram       = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
-		wifi      = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
+		cpu1       = { match = "Core 0:%s+%+(%d+)%.%d°[CF]" },
+		cpu2       = { match = "Core 1:%s+%+(%d+)%.%d°[CF]" },
+		cpu3       = { match = "Core 2:%s+%+(%d+)%.%d°[CF]" },
+		cpu4       = { match = "Core 3:%s+%+(%d+)%.%d°[CF]" },
+		cpu5       = { match = "Core 4:%s+%+(%d+)%.%d°[CF]" },
+		cpu6       = { match = "Core 5:%s+%+(%d+)%.%d°[CF]" },
+		cpu7       = { match = "Core 6:%s+%+(%d+)%.%d°[CF]" },
+		cpu8       = { match = "Core 7:%s+%+(%d+)%.%d°[CF]" },
+		-- ram       = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
+		-- wifi      = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
 		--chip      = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
-		cpu_fan   = { match = "Processor%sFan:%s+(%d+)%sRPM" },
-		video_fan = { match = "Video%sFan:%s+(%d+)%sRPM" },
+		--cpu_fan   = { match = "Processor%sFan:%s+(%d+)%sRPM" },
+		--video_fan = { match = "Video%sFan:%s+(%d+)%sRPM" },
 	}
 
 	-- start auto async lmsensors check
@@ -168,9 +175,15 @@ function desktop:init(args)
 
 	thermal_chips.args = {
 		sensors = {
-			{ meter_function = system.lmsensors.get, args = "cpu",  maxm = 100, crit = 75, name = "cpu"  },
-			{ meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75, name = "wifi" },
-			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80, name = "gpu" }
+			{ meter_function = system.lmsensors.get, args = "cpu1",  maxm = 100, crit = 86, name = "Core1"  },
+			{ meter_function = system.lmsensors.get, args = "cpu2",  maxm = 100, crit = 86, name = "Core2"  },
+			{ meter_function = system.lmsensors.get, args = "cpu3",  maxm = 100, crit = 86, name = "Core3"  },
+			{ meter_function = system.lmsensors.get, args = "cpu4",  maxm = 100, crit = 86, name = "Core4"  },
+			{ meter_function = system.lmsensors.get, args = "cpu5",  maxm = 100, crit = 86, name = "Core5"  },
+			{ meter_function = system.lmsensors.get, args = "cpu6",  maxm = 100, crit = 86, name = "Core6"  },
+			{ meter_function = system.lmsensors.get, args = "cpu7",  maxm = 100, crit = 86, name = "Core7"  },
+			{ meter_function = system.lmsensors.get, args = "cpu8",  maxm = 100, crit = 86, name = "Core8"  },
+			-- { meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75, name = "wifi" },
 		},
 		timeout = sensors_base_timeout,
 	}
@@ -181,14 +194,15 @@ function desktop:init(args)
 	--------------------------------------------------------------------------------
 	local thermal_storage = { geometry = wgeometry(grid, places.thermal2, workarea) }
 
-	local hdd_smart_check = system.simple_async("smartctl --attributes /dev/sda", "194.+%s(%d+)%s%(.+%)\r?\n")
+	-- local hdd_smart_check = system.simple_async("smartctl --attributes /dev/sda", "194.+%s(%d+)%s%(.+%)\r?\n")
 	local ssd_smart_check = system.simple_async("smartctl --attributes /dev/nvme0n1", "Temperature:%s+(%d+)%sCelsius")
 
 	thermal_storage.args = {
 		sensors = {
-			{ async_function = hdd_smart_check, maxm = 60, crit = 45, name = "hdd" },
+			-- { async_function = hdd_smart_check, maxm = 60, crit = 45, name = "hdd" },
 			{ async_function = ssd_smart_check, maxm = 80, crit = 70, name = "ssd" },
-			{ meter_function = system.lmsensors.get, args = "ram", maxm = 100, crit = 75, name = "ram" },
+			{ async_function = system.thermal.nvoptimus, maxm = 105, crit = 80, name = "gpu" }
+			-- { meter_function = system.lmsensors.get, args = "ram", maxm = 100, crit = 75, name = "ram" },
 		},
 		timeout = 3 * sensors_base_timeout,
 	}
@@ -197,15 +211,15 @@ function desktop:init(args)
 
 	-- Fans
 	--------------------------------------------------------------------------------
-	local fan = { geometry = wgeometry(grid, places.fan, workarea) }
-	fan.args = {
-		sensors = {
-			{ meter_function = system.lmsensors.get, args = "cpu_fan",   maxm = 5000, crit = 4000, name = "fan1" },
-			{ meter_function = system.lmsensors.get, args = "video_fan", maxm = 5000, crit = 4000, name = "fan2" }
-		},
-		timeout = sensors_base_timeout,
-	}
-	fan.style = beautiful.individual.desktop.multiline.fan
+	-- local fan = { geometry = wgeometry(grid, places.fan, workarea) }
+	-- fan.args = {
+	-- 	sensors = {
+	-- 		{ meter_function = system.lmsensors.get, args = "cpu_fan",   maxm = 5000, crit = 4000, name = "fan1" },
+	-- 		{ meter_function = system.lmsensors.get, args = "video_fan", maxm = 5000, crit = 4000, name = "fan2" }
+	-- 	},
+	-- 	timeout = sensors_base_timeout,
+	-- }
+	-- fan.style = beautiful.individual.desktop.multiline.fan
 
 	-- traffic stat
 	--------------------------------------------------------------------------------
@@ -225,41 +239,41 @@ function desktop:init(args)
 
 	-- Calendar
 	--------------------------------------------------------------------------------
-	local cwidth = 100 -- calendar widget width
-	local cy = 21      -- calendar widget upper margin
-	local cheight = wa.height - 2*cy
-
-	local calendar = {
-		args     = { timeout = 60 },
-		geometry = { x = wa.width - cwidth, y = cy, width = cwidth, height = cheight }
-	}
+	-- local cwidth = 100 -- calendar widget width
+	-- local cy = 21      -- calendar widget upper margin
+	-- local cheight = wa.height - 2*cy
+	--
+	-- local calendar = {
+	-- 	args     = { timeout = 60 },
+	-- 	geometry = { x = wa.width - cwidth, y = cy, width = cwidth, height = cheight }
+	-- }
 
 
 	-- Initialize all desktop widgets
 	--------------------------------------------------------------------------------
 	netspeed.body = redflat.desktop.speedmeter.compact(netspeed.args, netspeed.style)
 	ssdspeed.body = redflat.desktop.speedmeter.compact(ssdspeed.args, ssdspeed.style)
-	hddspeed.body = redflat.desktop.speedmeter.compact(hddspeed.args, hddspeed.style)
+	-- hddspeed.body = redflat.desktop.speedmeter.compact(hddspeed.args, hddspeed.style)
 
 	cpumem.body = redflat.desktop.multimeter(cpumem.args, cpumem.style)
-	transm.body = redflat.desktop.multimeter(transm.args, transm.style)
+	-- transm.body = redflat.desktop.multimeter(transm.args, transm.style)
 
 	disks.body  = redflat.desktop.multiline(disks.args, disks.style)
-	qemu.body  = redflat.desktop.multiline(qemu.args, qemu.style)
+	-- qemu.body  = redflat.desktop.multiline(qemu.args, qemu.style)
 
 	thermal_chips.body = redflat.desktop.multiline(thermal_chips.args, thermal_chips.style)
 	thermal_storage.body = redflat.desktop.multiline(thermal_storage.args, thermal_storage.style)
 
-	fan.body   = redflat.desktop.multiline(fan.args, fan.style)
+	-- fan.body   = redflat.desktop.multiline(fan.args, fan.style)
 	vnstat.body = redflat.desktop.multiline(vnstat.args, vnstat.style)
 
-	calendar.body = redflat.desktop.calendar(calendar.args, calendar.style)
+	-- calendar.body = redflat.desktop.calendar(calendar.args, calendar.style)
 
 	-- Desktop setup
 	--------------------------------------------------------------------------------
 	local desktop_objects = {
-		calendar, netspeed, hddspeed, ssdspeed, transm, cpumem,
-		disks, qemu, vnstat, fan, thermal_chips, thermal_storage
+		netspeed, ssdspeed, cpumem,
+		disks, vnstat, thermal_chips, thermal_storage
 	}
 
 	if not autohide then
@@ -268,7 +282,7 @@ function desktop:init(args)
 		redflat.util.desktop.build.dynamic(desktop_objects, nil, beautiful.desktopbg, args.buttons)
 	end
 
-	calendar.body:activate_wibox(calendar.wibox)
+	-- calendar.body:activate_wibox(calendar.wibox)
 end
 
 -- End
