@@ -21,8 +21,8 @@ theme.path = awful.util.get_configuration_dir() .. "themes/ruby"
 -- Main config
 --------------------------------------------------------------------------------
 theme.panel_height = 38 -- panel height
-theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
-theme.desktopbg    = theme.path .. "/wallpaper/transparent.png"
+theme.wallpaper    = "/home/mike/Pictures/wallpapers/280263.jpg"
+theme.desktopbg    = theme.wallpaper
 
 -- Setup parent theme settings
 --------------------------------------------------------------------------------

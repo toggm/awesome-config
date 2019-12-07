@@ -21,37 +21,37 @@ theme.useless_gap         = 4  -- useless gap
 -- Fonts
 ------------------------------------------------------------
 theme.fonts = {
-	main     = "Roboto 18",      -- main font
-	menu     = "Roboto 18",      -- main menu font
-	tooltip  = "Roboto 18",      -- tooltip font
-	notify   = "Play bold 18",   -- redflat notify popup font
-	clock    = "Play bold 16",   -- textclock widget font
-	qlaunch  = "Play bold 18",   -- quick launch key label font
-	keychain = "Play bold 20",   -- key sequence tip font
-	title    = "Roboto bold 18", -- widget titles font
-	tiny     = "Roboto bold 14", -- smallest font for widgets
-	titlebar = "Roboto bold 18", -- client titlebar font
+	main     = "Roboto 7",      -- main font
+	menu     = "Roboto 7",      -- main menu font
+	tooltip  = "Roboto 5",      -- tooltip font
+	notify   = "Play bold 8",   -- redflat notify popup font
+	clock    = "Play bold 8",   -- textclock widget font
+	qlaunch  = "Play bold 8",   -- quick launch key label font
+	keychain = "Play bold 8",   -- key sequence tip font
+	title    = "Roboto bold 8", -- widget titles font
+	tiny     = "Roboto bold 6", -- smallest font for widgets
+	titlebar = "Roboto bold 8", -- client titlebar font
 	hotkeys  = {
-		main  = "Roboto 18",             -- hotkeys helper main font
-		key   = "Iosevka Term Light 18", -- hotkeys helper key font (use monospace for align)
-		title = "Roboto bold 20",        -- hotkeys helper group title font
+		main  = "Roboto 6",             -- hotkeys helper main font
+		key   = "Iosevka Term Light 6", -- hotkeys helper key font (use monospace for align)
+		title = "Roboto bold 6",        -- hotkeys helper group title font
 	},
 	player   = {
-		main = "Play bold 18", -- player widget main font
-		time = "Play bold 20", -- player widget current time font
+		main = "Play bold 9", -- player widget main font
+		time = "Play bold 11", -- player widget current time font
 	},
 }
 
 theme.cairo_fonts = {
-	tag         = { font = "Play", size = 20, face = 1 }, -- tag widget font
-	appswitcher = { font = "Play", size = 24, face = 1 }, -- appswitcher widget font
+	tag         = { font = "Play", size = 16, face = 1 }, -- tag widget font
+	appswitcher = { font = "Play", size = 20, face = 1 }, -- appswitcher widget font
 	navigator   = {
-		title = { font = "Play", size = 32, face = 1, slant = 0 }, -- window navigation title font
-		main  = { font = "Play", size = 26, face = 1, slant = 0 }  -- window navigation  main font
+		title = { font = "Play", size = 28, face = 1, slant = 0 }, -- window navigation title font
+		main  = { font = "Play", size = 22, face = 1, slant = 0 }  -- window navigation  main font
 	},
 
 	desktop = {
-		textbox = { font = "prototype", size = 28, face = 0 },
+		textbox = { font = "prototype", size = 24, face = 0 },
 	},
 }
 

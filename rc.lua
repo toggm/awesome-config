@@ -15,3 +15,15 @@ local rc = "shade.ruby.rc-ruby"
 --local rc = "shade.steel.rc-steel"
 
 require(rc)
+
+
+do
+  local cmds =
+  {
+    "compton"
+  }
+
+  for _,i in pairs(cmds) do
+    --awful.util.spawn(i)
+  end
+end
