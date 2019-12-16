@@ -770,6 +770,14 @@ function hotkeys:init(args)
 			{ env.mod, "Mod1" }, "space", function() awful.spawn("clipflap --show") end,
 			{ description = "Clipboard manager", group = "Applications" }
 		},
+		{
+			{ env.mod, "Mod1" }, "l", function() awful.spawn("i3lock --color=000000 && sleep 1") end,
+			{ description = "Lock screen", group = "Applications" }
+	  },
+		{
+			{ env.mod, "Mod1" }, "s", function() awful.spawn("systemctl suspend") end,
+			{ description = "Suspend", group = "Applications" }
+	  },
 
 		{
 			{ env.mod }, "l", focus_switch_byd("right"),
