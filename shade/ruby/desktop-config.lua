@@ -25,7 +25,7 @@ function desktop:init(args)
 
 	args = args or {}
 	local env = args.env or {}
-	local autohide = env.desktop_autohide or false
+	local autohide = env.desktop_autohide or true
 
 	-- placement
 	local grid = beautiful.desktop.grid
@@ -151,14 +151,14 @@ function desktop:init(args)
 
 	system.lmsensors.delay = 2
 	system.lmsensors.patterns = {
-		cpu1       = { match = "Core 0:%s+%+(%d+)%.%d°[CF]" },
-		cpu2       = { match = "Core 1:%s+%+(%d+)%.%d°[CF]" },
-		cpu3       = { match = "Core 2:%s+%+(%d+)%.%d°[CF]" },
-		cpu4       = { match = "Core 3:%s+%+(%d+)%.%d°[CF]" },
-		cpu5       = { match = "Core 4:%s+%+(%d+)%.%d°[CF]" },
-		cpu6       = { match = "Core 5:%s+%+(%d+)%.%d°[CF]" },
-		cpu7       = { match = "Core 6:%s+%+(%d+)%.%d°[CF]" },
-		cpu8       = { match = "Core 7:%s+%+(%d+)%.%d°[CF]" },
+		core1       = { match = "Core%s0:%s+%+(%d+)%.%d°[CF]" },
+		core2       = { match = "Core%s1:%s+%+(%d+)%.%d°[CF]" },
+		core3       = { match = "Core%s2:%s+%+(%d+)%.%d°[CF]" },
+		core4       = { match = "Core%s3:%s+%+(%d+)%.%d°[CF]" },
+		core5       = { match = "Core%s4:%s+%+(%d+)%.%d°[CF]" },
+		core6       = { match = "Core%s5:%s+%+(%d+)%.%d°[CF]" },
+		core7       = { match = "Core%s6:%s+%+(%d+)%.%d°[CF]" },
+		core8       = { match = "Core%s7:%s+%+(%d+)%.%d°[CF]" },
 		-- ram       = { match = "SODIMM:%s+%+(%d+)%.%d°[CF]" },
 		-- wifi      = { match = "iwlwifi%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
 		--chip      = { match = "pch_skylake%-virtual%-0\r?\nAdapter:%sVirtual%sdevice\r?\ntemp1:%s+%+(%d+)%.%d°[CF]" },
@@ -175,14 +175,14 @@ function desktop:init(args)
 
 	thermal_chips.args = {
 		sensors = {
-			{ meter_function = system.lmsensors.get, args = "cpu1",  maxm = 100, crit = 86, name = "Core1"  },
-			{ meter_function = system.lmsensors.get, args = "cpu2",  maxm = 100, crit = 86, name = "Core2"  },
-			{ meter_function = system.lmsensors.get, args = "cpu3",  maxm = 100, crit = 86, name = "Core3"  },
-			{ meter_function = system.lmsensors.get, args = "cpu4",  maxm = 100, crit = 86, name = "Core4"  },
-			{ meter_function = system.lmsensors.get, args = "cpu5",  maxm = 100, crit = 86, name = "Core5"  },
-			{ meter_function = system.lmsensors.get, args = "cpu6",  maxm = 100, crit = 86, name = "Core6"  },
-			{ meter_function = system.lmsensors.get, args = "cpu7",  maxm = 100, crit = 86, name = "Core7"  },
-			{ meter_function = system.lmsensors.get, args = "cpu8",  maxm = 100, crit = 86, name = "Core8"  },
+			{ meter_function = system.lmsensors.get, args = "core1",  maxm = 100, crit = 86, name = "core1"  },
+			{ meter_function = system.lmsensors.get, args = "core2",  maxm = 100, crit = 86, name = "core2"  },
+			{ meter_function = system.lmsensors.get, args = "core3",  maxm = 100, crit = 86, name = "core3"  },
+			{ meter_function = system.lmsensors.get, args = "core4",  maxm = 100, crit = 86, name = "core4"  },
+			{ meter_function = system.lmsensors.get, args = "core5",  maxm = 100, crit = 86, name = "core5"  },
+			{ meter_function = system.lmsensors.get, args = "core6",  maxm = 100, crit = 86, name = "core6"  },
+			{ meter_function = system.lmsensors.get, args = "core7",  maxm = 100, crit = 86, name = "core7"  },
+			{ meter_function = system.lmsensors.get, args = "core8",  maxm = 100, crit = 86, name = "core8"  },
 			-- { meter_function = system.lmsensors.get, args = "wifi", maxm = 100, crit = 75, name = "wifi" },
 		},
 		timeout = sensors_base_timeout,

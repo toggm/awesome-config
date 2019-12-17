@@ -20,9 +20,9 @@ theme.path = awful.util.get_configuration_dir() .. "themes/ruby"
 
 -- Main config
 --------------------------------------------------------------------------------
-theme.panel_height = 38 -- panel height
-theme.wallpaper    = theme.path .. "/wallpaper/custom.png"
-theme.desktopbg    = theme.path .. "/wallpaper/transparent.png"
+theme.panel_height = 24 -- panel height
+theme.wallpaper    = "/home/mike/Pictures/wallpapers/light_circles_long_exposure_152303_1920x1200.jpg"
+theme.desktopbg    = theme.wallpaper
 
 -- Setup parent theme settings
 --------------------------------------------------------------------------------

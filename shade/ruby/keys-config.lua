@@ -24,7 +24,7 @@ local grid = redflat.layout.grid
 local map = redflat.layout.map
 local qlaunch = redflat.float.qlaunch
 local numkeys_line = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
-local tagkeys_line = { "q", "w", "e", "r", "t", "y", "u", "i", "o" }
+local tagkeys_line = { "q", "w", "e", "r", "t", "z", "u", "i", "o" }
 
 -- Key support functions
 -----------------------------------------------------------------------------------------------------------------------
@@ -87,13 +87,14 @@ end
 
 -- select next row tag on second key press
 local function tag_double_select(i, colnum)
-	local screen = awful.screen.focused()
-	local tag = screen.tags[i]
-	if tag.selected then
-		tag = (i <= colnum) and screen.tags[i + colnum] or screen.tags[i - colnum]
-		if tag then tag:view_only() end
-	else
-		tag:view_only()
+	for s in screen do
+		local tag = s.tags[i]
+		if tag.selected then
+			tag = (i <= colnum) and s.tags[i + colnum] or s.tags[i - colnum]
+			if tag then tag:view_only() end
+		else
+			tag:view_only()
+		end
 	end
 end
 
@@ -126,31 +127,34 @@ end
 
 -- switch tag line
 local function tag_line_switch(colnum)
-	local screen = awful.screen.focused()
-	local i = screen.selected_tag.index
-	local tag = (i <= colnum) and screen.tags[i + colnum] or screen.tags[i - colnum]
-	tag:view_only()
+	for s in screen do
+		local i = s.selected_tag.index
+		local tag = (i <= colnum) and s.tags[i + colnum] or s.tags[i - colnum]
+		tag:view_only()
+	end
 end
 
 local function tag_line_jump(colnum, is_down)
-	local screen = awful.screen.focused()
-	local i = screen.selected_tag.index
-	local tag = is_down and screen.tags[i + colnum] or screen.tags[i - colnum]
-	if tag then tag:view_only() end
+	for s in screen do
+		local i = s.selected_tag.index
+		local tag = is_down and s.tags[i + colnum] or s.tags[i - colnum]
+		if tag then tag:view_only() end
+	end
 end
 
 -- swap clients between tag lines
 local function clients_swap_by_line(colnum)
-	local screen = awful.screen.focused()
-	local i = screen.selected_tag.index
+	for s in screen do
+		local i = s.selected_tag.index
 
-	local current_tag = screen.selected_tag
-	local next_tag = (i <= colnum) and screen.tags[i + colnum] or screen.tags[i - colnum]
+		local current_tag = s.selected_tag
+		local next_tag = (i <= colnum) and s.tags[i + colnum] or s.tags[i - colnum]
 
-	local cc = current_tag:clients()
-	local nc = next_tag:clients()
-	for _, c in ipairs(cc) do c:move_to_tag(next_tag) end
-	for _, c in ipairs(nc) do c:move_to_tag(current_tag) end
+		local cc = current_tag:clients()
+		local nc = next_tag:clients()
+		for _, c in ipairs(cc) do c:move_to_tag(next_tag) end
+		for _, c in ipairs(nc) do c:move_to_tag(current_tag) end
+	end
 end
 
 -- numeric keys function builders
@@ -160,7 +164,7 @@ local function tag_numkey(i, mod, action)
 		function ()
 			local screen = awful.screen.focused()
 			local tag = screen.tags[i]
-			if tag then action(tag) end
+		  if tag then action(tag) end
 		end
 	)
 end
@@ -770,6 +774,15 @@ function hotkeys:init(args)
 			{ env.mod, "Mod1" }, "space", function() awful.spawn("clipflap --show") end,
 			{ description = "Clipboard manager", group = "Applications" }
 		},
+		{
+       { env.mod, "Mod1" }, "l", function() awful.spawn("i3lock --color=000000 && sleep 1") end,
+       { description = "Lock screen", group = "Applications" }
+    },
+    {
+       { env.mod, "Mod1" }, "s", function() awful.spawn("systemctl suspend") end,
+       { description = "Suspend", group = "Applications" }
+    },
+
 
 		{
 			{ env.mod }, "l", focus_switch_byd("right"),
@@ -827,11 +840,21 @@ function hotkeys:init(args)
 			{ description = "Swith to previos tag by history", group = "Tag navigation" }
 		},
 		{
-			{ env.mod }, "Right", awful.tag.viewnext,
+			{ env.mod }, "Right",
+			function()
+			    for i = 1, screen.count() do
+			        awful.tag.viewnext(i)
+			    end
+			end,
 			{ description = "View next tag", group = "Tag navigation" }
 		},
 		{
-			{ env.mod }, "Left", awful.tag.viewprev,
+			{ env.mod }, "Left",
+			function()
+			    for i = 1, screen.count() do
+			        awful.tag.viewprev(i)
+			    end
+			end,
 			{ description = "View previous tag", group = "Tag navigation" }
 		},
 		{
@@ -869,19 +892,19 @@ function hotkeys:init(args)
 		},
 
 		{
-			{}, "XF86AudioRaiseVolume", volume_raise,
+			{env.mod, "Mod1"}, "+", volume_raise,
 			{ description = "Increase volume", group = "Volume control" }
 		},
 		{
-			{}, "XF86AudioLowerVolume", volume_lower,
+			{env.mod, "Mod1"}, "-", volume_lower,
 			{ description = "Reduce volume", group = "Volume control" }
 		},
 		{
-			{}, "XF86AudioMute", volume_mute,
+			{env.mod, "Mod1"}, "m", volume_mute,
 			{ description = "Mute audio", group = "Volume control" }
 		},
 		{
-			{ "Control" }, "XF86AudioMute", function () microphone:mute() end,
+			{env.mod, "Control"}, "m", function () microphone:mute() end,
 			{ description = "Mute microphone", group = "Volume control" }
 		},
 

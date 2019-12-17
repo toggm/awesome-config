@@ -21,24 +21,24 @@ theme.useless_gap         = 4  -- useless gap
 -- Fonts
 ------------------------------------------------------------
 theme.fonts = {
-	main     = "Roboto 13",      -- main font
-	menu     = "Roboto 13",      -- main menu font
-	tooltip  = "Roboto 13",      -- tooltip font
-	notify   = "Play bold 14",   -- redflat notify popup font
-	clock    = "Play bold 12",   -- textclock widget font
-	qlaunch  = "Play bold 14",   -- quick launch key label font
-	keychain = "Play bold 16",   -- key sequence tip font
-	title    = "Roboto bold 13", -- widget titles font
-	tiny     = "Roboto bold 10", -- smallest font for widgets
-	titlebar = "Roboto bold 13", -- client titlebar font
+	main     = "Roboto 9",      -- main font
+	menu     = "Roboto 9",      -- main menu font
+	tooltip  = "Roboto 9",      -- tooltip font
+	notify   = "Play bold 12",   -- redflat notify popup font
+	clock    = "Play bold 10",   -- textclock widget font
+	qlaunch  = "Play bold 12",   -- quick launch key label font
+	keychain = "Play bold 14",   -- key sequence tip font
+	title    = "Roboto bold 11", -- widget titles font
+	tiny     = "Roboto bold 8", -- smallest font for widgets
+	titlebar = "Roboto bold 11", -- client titlebar font
 	hotkeys  = {
-		main  = "Roboto 14",             -- hotkeys helper main font
-		key   = "Iosevka Term Light 14", -- hotkeys helper key font (use monospace for align)
-		title = "Roboto bold 16",        -- hotkeys helper group title font
+		main  = "Roboto 12",             -- hotkeys helper main font
+		key   = "Iosevka Term Light 12", -- hotkeys helper key font (use monospace for align)
+		title = "Roboto bold 14",        -- hotkeys helper group title font
 	},
 	player   = {
-		main = "Play bold 13", -- player widget main font
-		time = "Play bold 15", -- player widget current time font
+		main = "Play bold 11", -- player widget main font
+		time = "Play bold 13", -- player widget current time font
 	},
 }
 
