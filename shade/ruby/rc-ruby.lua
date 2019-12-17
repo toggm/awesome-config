@@ -99,13 +99,21 @@ taglist.buttons = awful.util.table.join(
 
 -- some tag settings which indirectky depends on row and columns number of taglist
 taglist.names = {
-	"Prime", "Full", "Code", "Edit", "Misc", "Game",
+	"Prime", "Code", "Comm", "Monitor", "Misc", "Other",
 	"Spare", "Back", "Test", "Qemu", "Data", "Free"
 }
 
 local al = awful.layout.layouts
-taglist.layouts = {
-	al[5], al[6], al[6], al[4], al[3], al[3],
+
+taglist.layouts = {}
+-- left monitor
+taglist.layouts[1] = {
+	al[5], al[5], al[6], al[4], al[3], al[3],
+	al[5], al[6], al[6], al[4], al[3], al[1]
+}
+-- right monitor
+taglist.layouts[2] = {
+	al[5], al[3], al[6], al[4], al[3], al[3],
 	al[5], al[6], al[6], al[4], al[3], al[1]
 }
 
@@ -267,8 +275,10 @@ awful.screen.connect_for_each_screen(
 		-- wallpaper
 		env.wallpaper(s)
 
+		local taglistLayout = taglist.layouts[s.index]
+
 		-- tags
-		awful.tag(taglist.names, s, taglist.layouts)
+		awful.tag(taglist.names, s, taglistLayout)
 
 		-- layoutbox widget
 		layoutbox[s] = redflat.widget.layoutbox({ screen = s })
